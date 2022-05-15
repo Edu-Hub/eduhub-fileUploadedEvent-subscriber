@@ -1,13 +1,7 @@
-var nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 
-/**
- * Triggered from a message on a Cloud Pub/Sub topic.
- *
- * @param {!Object} event Event payload.
- * @param {!Object} context Metadata for the event.
- */
-exports.notifyGroupUsers = (event, context) => {
-  fileUploadNotifyUsers(event.data);
+exports.notifyGroupUsers = (event) => {
+  fileUploadNotifyUsers(JSON.parse(Buffer.from(event.data, 'base64').toString()));
 };
 
 const fileUploadNotifyUsers = (messagePayload) => {
